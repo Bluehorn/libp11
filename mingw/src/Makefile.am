@@ -1,5 +1,3 @@
-# Process this file with automake to create Makefile.in
-
 MAINTAINERCLEANFILES = Makefile.in
 CLEANFILES = libp11.pc
 EXTRA_DIST = Makefile.mak makedef.pl
