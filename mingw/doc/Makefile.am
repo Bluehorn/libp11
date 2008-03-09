@@ -1,15 +1,29 @@
 # Process this file with automake to create Makefile.in
 
-MAINTAINERCLEANFILES = Makefile.in $(HTML) ChangeLog
+MAINTAINERCLEANFILES = Makefile.in ChangeLog
 
-EXTRA_DIST = README export-wiki.sh export-wiki.xsl \
-	generate-api.sh doxygen.conf.in $(HTML) index.html ChangeLog
+if ENABLE_DOC
+SUBDIRS = nonpersistent
+endif
+DIST_SUBDIRS = nonpersistent
 
-HTML= $(shell ls $(srcdir)/*.html $(srcdir)/*.css $(srcdir)/api/*)
+dist_doc_DATA = README
+dist_noinst_DATA=doxygen-footer.html *.gif
 
-index.html:
-	sh $(srcdir)/export-wiki.sh $(srcdir)
-	sh $(srcdir)/generate-api.sh $(srcdir)
+if ENABLE_API_DOC
 
-ChangeLog:
-	sh $(srcdir)/changelog.sh $(srcdir)
+apidoc_DATA=api.out/html/*
+
+
+api.out/html/*: \
+		$(EXTRA_DIST) \
+		../src/*.h \
+		*.gif
+	-rm -fr api.out
+	$(DOXYGEN) doxygen.conf
+	cp *.gif api.out/html
+
+endif
+
+clean-local:
+	-rm -fr api.out
