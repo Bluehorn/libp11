@@ -1,5 +1,4 @@
-AUTOMAKE_OPTIONS = foreign
-ACLOCAL_AMFLAGS = -I aclocal
+AUTOMAKE_OPTIONS = foreign 1.10
 
 MAINTAINERCLEANFILES = \
 	Makefile.in config.h.in config.h.in~ configure \

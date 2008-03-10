@@ -1,8 +1,6 @@
 dnl -*- mode: m4; -*-
-dnl Process this file with autoconf to produce a configure script.
 
-# Require autoconf 2.52
-AC_PREREQ([2.52])
+AC_PREREQ([2.60])
 
 define([PACKAGE_VERSION_MAJOR], [0])
 define([PACKAGE_VERSION_MINOR], [2])
@@ -226,17 +224,6 @@ fi
 if test "${enable_strict}" = "yes"; then
 	CFLAGS="${CFLAGS} -Wall -Wextra"
 fi
-
-# workaround for <autoconf-2.60
-if test -z "${docdir}"; then
-	docdir="\$(datarootdir)/doc/\$(PACKAGE_NAME)"
-	AC_SUBST([docdir])
-fi
-if test -z "${htmldir}"; then
-	htmldir="\$(docdir)"
-	AC_SUBST([htmldir])
-fi
-# end workaround
 
 AC_OUTPUT([
 	Makefile
