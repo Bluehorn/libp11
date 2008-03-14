@@ -6,6 +6,7 @@ MAINTAINERCLEANFILES = \
 	compile depcomp config.log config.status \
 	config.guess config.sub acinclude.m4 aclocal.m4 \
 	config.log configure packaged
+EXTRA_DIST = svnignore
 
 dist_noinst_DATA = COPYING bootstrap examples/Makefile examples/*.c examples/README
 dist_doc_DATA = NEWS
