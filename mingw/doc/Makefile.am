@@ -14,8 +14,8 @@ apidoc_DATA=api.out/html/*
 
 
 api.out/html/*: \
-		$(EXTRA_DIST) \
 		../src/*.h \
+		doxygen.conf \
 		*.gif
 	-rm -fr api.out
 	$(DOXYGEN) doxygen.conf
