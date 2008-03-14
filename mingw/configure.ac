@@ -73,28 +73,28 @@ esac
 
 AC_ARG_ENABLE(
 	[strict],
-	[AC_HELP_STRING([--enable-strict], [enable strict compile mode [[default=disabled]]])],
+	[AC_HELP_STRING([--enable-strict], [enable strict compile mode @<:@disabled@:>@])],
 	,
 	[enable_strict="no"]
 )
 
 AC_ARG_ENABLE(
 	[pedantic],
-	[AC_HELP_STRING([--enable-pedantic], [enable pedantic compile mode [[desfault=disabled]]])],
+	[AC_HELP_STRING([--enable-pedantic], [enable pedantic compile mode @<:@disabled@:>@])],
 	,
 	[enable_pedantic="no"]
 )
 
 AC_ARG_ENABLE(
 	[doc],
-	[AC_HELP_STRING([--enable-doc], [enable installation of documents. [[default=disabled]]])],
+	[AC_HELP_STRING([--enable-doc], [enable installation of documents. @<:@disabled@:>@])],
 	,
 	[enable_doc="no"]
 )
 
 AC_ARG_ENABLE(
 	[api-doc],
-	[AC_HELP_STRING([--enable-api-doc], [enable generation and installation of api documents. [[default=disabled]]])],
+	[AC_HELP_STRING([--enable-api-doc], [enable generation and installation of api documents. @<:@disabled@:>@])],
 	,
 	[enable_api_doc="no"]
 )
