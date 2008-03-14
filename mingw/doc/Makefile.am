@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in ChangeLog
+MAINTAINERCLEANFILES = Makefile.in
 
 if ENABLE_DOC
 SUBDIRS = nonpersistent
@@ -6,7 +6,7 @@ endif
 DIST_SUBDIRS = nonpersistent
 
 dist_doc_DATA = README
-dist_noinst_DATA=doxygen-footer.html *.gif
+dist_noinst_DATA = doxygen-footer.html *.gif
 
 if ENABLE_API_DOC
 
