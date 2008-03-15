@@ -23,13 +23,8 @@ libp11_la_LDFLAGS = $(AM_LDFLAGS) \
 if WIN32
 # def file required for MS users to build library
 mylibdir=$(libdir)
-if CYGWIN
-mylib_DATA=.libs/cygp11-@LIBP11_LT_MAJOR@.dll.def
-.libs/cygp11-@LIBP11_LT_MAJOR@.dll.def:	libp11.la
-else
-mylib_DATA=.libs/libp11-@LIBP11_LT_MAJOR@.dll.def
-.libs/libp11-@LIBP11_LT_MAJOR@.dll.def:	libp11.la
-endif
+mylib_DATA=.libs/@WIN_LIBPREFIX@p11-@LIBP11_LT_OLDEST@.dll.def
+.libs/@WIN_LIBPREFIX@p11-@LIBP11_LT_OLDEST@.dll.def:	libp11.la
 endif
 
 RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \

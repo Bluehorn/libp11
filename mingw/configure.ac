@@ -17,13 +17,12 @@ LIBP11_VERSION_FIX="PACKAGE_VERSION_FIX"
 
 # LT Version numbers, remember to change them just *before* a release.
 #   (Code changed:                      REVISION++)
-#   (Interfaces added/removed/changed:  CURRENT++, REVISION=0)
-#   (Interfaces added:                  AGE++)
-#   (Interfaces removed:                AGE=0)
+#   (Oldest interface removed:          OLDEST++)
+#   (Interfaces added:                  CURRENT++, REVISION=0)
 LIBP11_LT_CURRENT="1"
+LIBP11_LT_OLDEST="0"
 LIBP11_LT_REVISION="1"
-LIBP11_LT_AGE="1"
-LIBP11_LT_MAJOR="$((${LIBP11_LT_CURRENT}-${LIBP11_LT_AGE}))"
+LIBP11_LT_AGE="$((${LIBP11_LT_CURRENT}-${LIBP11_LT_OLDEST}))"
 
 AC_CONFIG_SRCDIR([src/libp11.h])
 
@@ -54,6 +53,7 @@ case "${host}" in
 	*-mingw32*|*-winnt*)
 		WIN32="yes"
 		CPPFLAGS="${CPPFLAGS} -DWIN32_LEAN_AND_MEAN"
+		WIN_LIBPREFIX="lib"
 	;;
 	*-cygwin*)
 		AC_MSG_CHECKING([cygwin mode to use])
@@ -66,6 +66,7 @@ case "${host}" in
 		else
 			AC_MSG_RESULT([Using cygwin])
 			CPPFLAGS="${CPPFLAGS} -DCRYPTOKI_FORCE_WIN32"
+			WIN_LIBPREFIX="cyg"
 			AC_DEFINE([USE_CYGWIN], [1], [Define if you are on Cygwin])
 		fi
 	;;
@@ -209,7 +210,8 @@ AC_SUBST([LIBP11_VERSION_FIX])
 AC_SUBST([LIBP11_LT_CURRENT])
 AC_SUBST([LIBP11_LT_REVISION])
 AC_SUBST([LIBP11_LT_AGE])
-AC_SUBST([LIBP11_LT_MAJOR])
+AC_SUBST([LIBP11_LT_OLDEST])
+AC_SUBST([WIN_LIBPREFIX])
 
 AM_CONDITIONAL([SVN_CHECKOUT], [test "${svn_checkout}" = "yes"])
 AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
