@@ -100,6 +100,13 @@ AC_ARG_ENABLE(
 	[enable_api_doc="no"]
 )
 
+AC_ARG_WITH(
+	[apidocdir],
+	[AC_HELP_STRING([--with-apidocdir], [put API documents at this directory, default HTMLDIR/api])],
+	[apidocdir="${with_apidocdir}"],
+	[apidocdir="\$(htmldir)/api"]
+)
+
 dnl Checks for programs.
 AC_PROG_CPP
 AC_PROG_INSTALL
@@ -200,7 +207,6 @@ PKG_CHECK_MODULES(
 )
 
 pkgconfigdir="\$(libdir)/pkgconfig"
-apidocdir="\$(docdir)/api"
 
 AC_SUBST([pkgconfigdir])
 AC_SUBST([apidocdir])
