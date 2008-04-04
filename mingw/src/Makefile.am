@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 CLEANFILES = libp11.pc
 EXTRA_DIST = Makefile.mak makedef.pl
 
@@ -17,7 +17,7 @@ libp11_la_CFLAGS = $(AM_CFLAGS) $(OPENSSL_CFLAGS) $(LTLIB_CFLAGS)
 libp11_la_LIBADD = $(OPENSSL_LIBS) $(LTLIB_LIBS)
 libp11_la_LDFLAGS = $(AM_LDFLAGS) \
 	-version-info @LIBP11_LT_CURRENT@:@LIBP11_LT_REVISION@:@LIBP11_LT_AGE@ \
-	-export-symbols libp11.exports \
+	-export-symbols $(srcdir)/libp11.exports \
 	-no-undefined
 
 if WIN32

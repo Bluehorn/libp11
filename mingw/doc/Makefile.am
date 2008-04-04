@@ -1,4 +1,4 @@
-MAINTAINERCLEANFILES = Makefile.in
+MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
 if ENABLE_DOC
 SUBDIRS = nonpersistent
@@ -6,7 +6,7 @@ endif
 DIST_SUBDIRS = nonpersistent
 
 dist_doc_DATA = README
-dist_noinst_DATA = doxygen-footer.html *.gif
+dist_noinst_DATA = $(srcdir)/doxygen-footer.html $(srcdir)/*.gif
 
 if ENABLE_API_DOC
 
@@ -14,12 +14,12 @@ apidoc_DATA=api.out/html/*
 
 
 api.out/html/*: \
-		../src/*.h \
-		doxygen.conf \
-		*.gif
+		$(top_srcdir)/src/*.h \
+		$(srcdir)/*.gif \
+		doxygen.conf
 	-rm -fr api.out
 	$(DOXYGEN) doxygen.conf
-	cp *.gif api.out/html
+	cp "$(srcdir)"/*.gif api.out/html
 
 endif
 
