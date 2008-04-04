@@ -17,7 +17,7 @@ libp11_la_CFLAGS = $(AM_CFLAGS) $(OPENSSL_CFLAGS) $(LTLIB_CFLAGS)
 libp11_la_LIBADD = $(OPENSSL_LIBS) $(LTLIB_LIBS)
 libp11_la_LDFLAGS = $(AM_LDFLAGS) \
 	-version-info @LIBP11_LT_CURRENT@:@LIBP11_LT_REVISION@:@LIBP11_LT_AGE@ \
-	-export-symbols $(srcdir)/libp11.exports \
+	-export-symbols "$(srcdir)/libp11.exports" \
 	-no-undefined
 
 if WIN32
@@ -32,8 +32,8 @@ RCCOMPILE = $(RC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 LTRCCOMPILE = $(LIBTOOL) --mode=compile --tag=RC $(RCCOMPILE)
 
 .rc.lo:
-	$(LTRCCOMPILE) -i $< -o $@
+	$(LTRCCOMPILE) -i "$<" -o "$@"
 
 .rc.o:
-	$(RCCOMPILE) -i $< -o $@
+	$(RCCOMPILE) -i "$<" -o "$@"
 
