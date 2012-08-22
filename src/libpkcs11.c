@@ -33,6 +33,9 @@
 #include <dlfcn.h>
 #endif
 #include "libp11-int.h"
+#ifdef HAVE_P11KIT
+#include <p11-kit/p11-kit.h>
+#endif
 
 #define MAGIC			0xd00bed00
 
@@ -41,6 +44,58 @@ struct sc_pkcs11_module {
 	void *handle;
 };
 typedef struct sc_pkcs11_module sc_pkcs11_module_t;
+
+
+#ifdef HAVE_P11KIT
+
+/*
+ * Load a module - this will load the shared object, call
+ * C_Initialize, and get the list of function pointers
+ */
+void *
+C_LoadModule(const char *mspec, CK_FUNCTION_LIST_PTR_PTR funcs)
+{
+	sc_pkcs11_module_t *mod;
+	int rv;
+
+	if (mspec == NULL)
+		return NULL;
+
+	mod = (sc_pkcs11_module_t *) calloc(1, sizeof(*mod));
+	mod->_magic = MAGIC;
+
+	rv = p11_kit_load_initialize_module(mspec, funcs);
+	if (rv != CKR_OK)
+		return NULL;
+	mod->handle = *funcs;
+	return mod;
+}
+
+/*
+ * Unload a pkcs11 module.
+ * The calling application is responsible for cleaning up.
+ */
+CK_RV
+C_UnloadModule(void *module)
+{
+	int rv;
+	sc_pkcs11_module_t *mod = (sc_pkcs11_module_t *) module;
+
+	if (!mod || mod->_magic != MAGIC)
+		return CKR_ARGUMENTS_BAD;
+
+	rv = p11_kit_finalize_module(mod->handle);
+	if (rv != CKR_OK) {
+		fprintf(stderr, "p11-kit unload error.");
+	}
+
+	memset(mod, 0, sizeof(*mod));
+	free(mod);
+
+	return CKR_OK;
+}
+
+#else
 
 /*
  * Load a module - this will load the shared object, call
@@ -125,3 +180,4 @@ C_UnloadModule(void *module)
 
 	return CKR_OK;
 }
+#endif

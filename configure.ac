@@ -206,6 +206,16 @@ PKG_CHECK_MODULES(
 	)]
 )
 
+PKG_CHECK_MODULES(
+	[P11KIT],
+	[p11-kit-1 >= 0.11],
+        [
+	  AC_DEFINE([HAVE_P11KIT], [1], [Use p11-kit to initialize PKCS11 modules])
+	  CFLAGS="${CFLAGS} ${P11KIT_CFLAGS}"
+	  LIBS="${LIBS} ${P11KIT_LIBS}"
+	],
+        [])
+
 pkgconfigdir="\$(libdir)/pkgconfig"
 
 AC_SUBST([pkgconfigdir])

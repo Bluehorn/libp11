@@ -70,6 +70,9 @@ int PKCS11_CTX_load(PKCS11_CTX * ctx, const char *name)
 		return -1;
 	}
 
+#ifndef HAVE_P11KIT
+	/* We may not call C_Initialize when using p11-kit. */
+
 	/* Tell the PKCS11 to initialize itself */
 	if (priv->init_args != NULL) {
 		memset(&_args, 0, sizeof(_args));
@@ -81,6 +84,7 @@ int PKCS11_CTX_load(PKCS11_CTX * ctx, const char *name)
 		PKCS11err(PKCS11_F_PKCS11_CTX_LOAD, rv);
 		return -1;
 	}
+#endif
 
 	/* Get info on the library */
 	rv = priv->method->C_GetInfo(&ck_info);
@@ -100,8 +104,12 @@ void PKCS11_CTX_unload(PKCS11_CTX * ctx)
 	PKCS11_CTX_private *priv;
 	priv = PRIVCTX(ctx);
 
+#ifndef HAVE_P11KIT
+	/* This is done in C_UnloadModule when using p11-kit. */
+
 	/* Tell the PKCS11 library to shut down */
 	priv->method->C_Finalize(NULL);
+#endif
 
 	/* Unload the module */
 	C_UnloadModule(handle);
